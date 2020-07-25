@@ -1,0 +1,28 @@
+{
+    "name": "helpers",
+    "version": "1.0.0",
+    "description": "helpers",
+    "main": "src/index.js",
+    "files": [
+        "dist"
+    ],
+    "type": "module",
+    "scripts": {
+        "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+        "prepublishOnly": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/serikoff/helpers.git"
+    },
+    "keywords": [
+        "helpers"
+    ],
+    "author": "serikoff",
+    "license": "UNLICENSED",
+    "bugs": {
+        "url": "https://github.com/serikoff/helpers/issues"
+    },
+    "devDependencies": {},
+    "homepage": "https://github.com/serikoff/helpers#readme"
+}
