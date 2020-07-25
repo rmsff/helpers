@@ -1,16 +1,15 @@
 {
-    "name": "helpers",
-    "version": "1.0.0",
+    "name": "@serikoff/helpers",
+    "version": "1.0.5",
     "description": "helpers",
     "main": "src/index.js",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/serikoff"
+    },
     "files": [
         "dist"
     ],
-    "type": "module",
-    "scripts": {
-        "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
-        "prepublishOnly": "npm run build"
-    },
+    "scripts": {},
     "repository": {
         "type": "git",
         "url": "git+https://github.com/serikoff/helpers.git"
@@ -24,5 +23,7 @@
         "url": "https://github.com/serikoff/helpers/issues"
     },
     "devDependencies": {},
-    "homepage": "https://github.com/serikoff/helpers#readme"
+    "homepage": "https://github.com/serikoff/helpers#readme",
+    "dependencies": {
+    }
 }
