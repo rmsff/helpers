@@ -94,7 +94,7 @@ const findProps = (
 		else find(newObj, [deepPath], looking);
 	} else {
 		if (type(looking, Array)) looking.forEach((l) => find(obj, [deepPath], l));
-		else find(obj, [deepPath], looking);
+		else find(obj, [], looking);
 	}
 	return result;
 };
