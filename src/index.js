@@ -46,40 +46,60 @@ const set = (obj = {}, path, value) => {
 	}
 };
 
-const findProps = (obj, prop, { path: deepPath, deep, includes, searhArray = true }) => {
+const findProps = (
+	obj,
+	looking,
+	{ path: deepPath, deep, includes, searhArray = true, searchType = 'props' },
+) => {
 	const result = [];
-	const find = (obj, path) => {
+	const find = (obj, path, looking) => {
 		if (
 			type(deep, 'Number') &&
 			((deepPath && deepPath.split('.').length) || 0) + deep < path.length
 		)
 			return;
 		for (const key in obj) {
-			if (key == prop) {
+			if (
+				(searchType === 'props' && key == looking) ||
+				(searchType === 'values' && obj[key] == looking)
+			) {
 				result.push({
 					path: [...path, `${key}`].join('.'),
 					value: obj[key],
+					prop: searchType === 'props' ? looking : key,
 				});
 			} else if (includes) {
-				if (key.search(type(includes, 'RegExp') ? includes : new RegExp(`${prop}`, 'g')) > -1) {
+				if (
+					(searchType === 'props' &&
+						key.search(type(includes, 'RegExp') ? includes : new RegExp(`${looking}`, 'g')) > -1) ||
+					(searchType === 'values' &&
+						`${obj[key]}`.search(
+							type(includes, 'RegExp') ? includes : new RegExp(`${looking}`, 'g'),
+						) > -1)
+				) {
 					result.push({
 						path: [...path, `${key}`].join('.'),
 						value: obj[key],
+						prop: searchType === 'props' ? looking : key,
 					});
 				}
 			}
-			if (type(obj[key], 'Object')) find(obj[key], [...path, `${key}`]);
-			else if (type(obj[key], 'Array') && searhArray) find(obj[key], [...path, `${key}`]);
+			if (type(obj[key], 'Object')) find(obj[key], [...path, `${key}`], looking);
+			else if (type(obj[key], 'Array') && searhArray) find(obj[key], [...path, `${key}`], looking);
 		}
 	};
 	if (deepPath) {
 		const newObj = get(obj, deepPath);
-		find(newObj, [deepPath]);
-	} else find(obj, []);
+		if (type(looking, Array)) looking.forEach((l) => find(newObj, [deepPath], l));
+		else find(newObj, [deepPath], looking);
+	} else {
+		if (type(looking, Array)) looking.forEach((l) => find(obj, [deepPath], l));
+		else find(obj, [deepPath], looking);
+	}
 	return result;
 };
 
-const findProp = (obj, prop, path, resultPath = []) => {
+const findProp = (obj, prop, { path, resultPath = [] }) => {
 	if (path) {
 		const newObj = get(obj, path);
 		return findProp(newObj, prop, false, [path]);
