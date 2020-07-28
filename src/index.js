@@ -16,12 +16,12 @@ const has = (obj, path) => {
 	}
 };
 
-const get = (obj, path) => {
+const get = (obj, path, defaultValue) => {
 	if (typeof path === 'string') path = path.split('.');
 	if (path.length === 1) {
-		return obj !== undefined && obj[path[0]];
+		return (obj !== undefined && obj[path[0]]) || (defaultValue !== undefined && defaultValue);
 	} else {
-		return get(obj && obj[path[0]], path.slice(1));
+		return get(obj && obj[path[0]], path.slice(1), defaultValue);
 	}
 };
 
