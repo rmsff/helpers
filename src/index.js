@@ -66,21 +66,21 @@ const findProps = (
 				result.push({
 					path: [...path, `${key}`].join('.'),
 					value: obj[key],
-					prop: searchType === 'props' ? looking : key,
+					prop: key,
 				});
 			} else if (includes) {
 				if (
 					(searchType === 'props' &&
-						key.search(type(includes, 'RegExp') ? includes : new RegExp(`${looking}`, 'g')) > -1) ||
+						key.search(type(includes, 'RegExp') ? includes : new RegExp(`${looking}`, 'gi')) > -1) ||
 					(searchType === 'values' &&
 						`${obj[key]}`.search(
-							type(includes, 'RegExp') ? includes : new RegExp(`${looking}`, 'g'),
+							type(includes, 'RegExp') ? includes : new RegExp(`${looking}`, 'gi'),
 						) > -1)
 				) {
 					result.push({
 						path: [...path, `${key}`].join('.'),
 						value: obj[key],
-						prop: searchType === 'props' ? looking : key,
+						prop: key,
 					});
 				}
 			}
