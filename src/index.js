@@ -1,7 +1,7 @@
 /**
  * Get data type of value
  * @param {any} value - Value whose data type is being checked
- * @param {(string | Number | String | Array | Object)} compareType - Comparison type. String or or class compare type.
+ * @param {(string | Number | String | Array | Object)} [compareType] - Comparison type. String or or class compare type.
  * @return {(boolean | string)} Data type or result of type comparison
  * @example
  * type('value'); -> String
@@ -59,18 +59,18 @@ const set = (obj = {}, path, value) => {
 
 /**
  * @typedef {Object} TOptions
- * @property {string} path - Search path
- * @property {number} deep - Recursion depth
- * @property {(boolean | RegExp)} includes - Search for occurrences or RegExp
- * @property {boolean} searhArray - Search by object and arrays
- * @property {('props' | 'values')} SearchType - Search type. "props" - search by object properties, "values" - search by object values
+ * @property {string} [path] - Search path
+ * @property {number} [deep] - Recursion depth
+ * @property {(boolean | RegExp)} [includes] - Search for occurrences or RegExp
+ * @property {boolean} [searhArray] - Search by object and arrays
+ * @property {('props' | 'values')} [searchType] - Search type. "props" - search by object properties, "values" - search by object values
  */
 
 /**
  * Recursively look up a names or values in an object
  * @param {({} | [])} obj - Search object (required)
- * @param {string} prop - Property
- * @param {TOptions} options - Options
+ * @param {string} looking - Property
+ * @param {TOptions} [options] - Options
  * @return {boolean} Search results
  * @example
  * findProps(object, 'd', { path: 'a.b.c', searchType: 'props', includes: true });
