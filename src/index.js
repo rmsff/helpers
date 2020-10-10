@@ -1,3 +1,14 @@
+/**
+ * Get data type of value
+ * @param {any} value - Value whose data type is being checked
+ * @param {(string | Number | String | Array | Object)} compareType - Comparison type. String or or class compare type.
+ * @return {(boolean | string)} Data type or result of type comparison
+ * @example
+ * type('value'); -> String
+ * type(new RegExp('value', 'RegExp'); -> true or false
+ * type(2314123, Number); -> true
+ */
+
 const type = (value, compareType) => {
 	const _type = Object.prototype.toString.call(value).replace(/\[object\s|\]/g, '');
 	if (compareType) {
@@ -46,6 +57,28 @@ const set = (obj = {}, path, value) => {
 	}
 };
 
+/**
+ * @typedef {Object} TOptions
+ * @property {string} path - Search path
+ * @property {number} deep - Recursion depth
+ * @property {(boolean | RegExp)} includes - Search for occurrences or RegExp
+ * @property {boolean} searhArray - Search by object and arrays
+ * @property {('props' | 'values')} SearchType - Search type. "props" - search by object properties, "values" - search by object values
+ */
+
+/**
+ * Recursively look up a names or values in an object
+ * @param {({} | [])} obj - Search object (required)
+ * @param {string} prop - Property
+ * @param {TOptions} options - Options
+ * @return {boolean} Search results
+ * @example
+ * findProps(object, 'd', { path: 'a.b.c', searchType: 'props', includes: true });
+ * -> [
+ *   { value: [ 1, 2, {} ], path: 'a.b.c.d' },
+ *   { value: 463456, path: 'a.b.c.d.2.d' }
+ * ]
+ */
 const findProps = (
 	obj,
 	looking,
@@ -99,22 +132,4 @@ const findProps = (
 	return result;
 };
 
-const findProp = (obj, prop, { path, resultPath = [] }) => {
-	if (path) {
-		const newObj = get(obj, path);
-		return findProp(newObj, prop, false, [path]);
-	}
-	if (obj.hasOwnProperty(prop))
-		return {
-			path: [...resultPath, `${prop}`].join('.'),
-			value: obj[prop],
-		};
-	for (const key in obj) {
-		if (type(obj[key], 'Object')) {
-			const found = findProp(obj[key], prop, false, [...resultPath, `${key}`]);
-			if (found) return found;
-		}
-	}
-};
-
-module.exports = { findProp, findProps, set, get, has, type };
+module.exports = { findProps, set, get, has, type };
