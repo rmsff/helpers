@@ -22,3 +22,11 @@ findProps(object, 'd', { path: 'a.b.c', searchType: 'props', includes: true });
 //   { value: 463456, path: 'a.b.c.d.2.d' }
 // ]
 ```
+
+### Get data type of value
+
+```
+type('value'); -> String
+type(new RegExp('value', 'RegExp'); -> true or false
+type(2314123, Number); -> true
+```
